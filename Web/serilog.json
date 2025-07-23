@@ -1,0 +1,267 @@
+{
+    "Serilog": {
+        "IsLogEnable": true,
+        "SelfLogEnable": true,
+        "SelfLogFilePath": "Logs/SelfLog/",
+        "Using": [
+            "Serilog.Sinks.MSSqlServer",
+            "Serilog.Settings.Configuration",
+            "Serilog.Sinks.Console",
+            "Serilog.Sinks.File"
+        ],
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+                "Microsoft": "Warning",
+                "Microsoft.Hosting.Lifetime": "Information"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Logger",
+                "Args": {
+                    "configureLogger": {
+                        "Filter": [
+                            {
+                                "Name": "ByIncludingOnly",
+                                "Args": {
+                                    "expression": "(@l = 'Error' or @l = 'Fatal')"
+                                }
+                            }
+                        ],
+                        "WriteTo": [
+                            {
+                                "Name": "File",
+                                "Args": {
+                                    "path": "Logs/ex_.log",
+                                    "outputTemplate": "{Timestamp:o} [{Level:u3}] ({SourceContext}) {Message}{NewLine}{Exception}",
+                                    "rollingInterval": "Day",
+                                    "retainedFileCountLimit": 7
+                                }
+                            },
+                            {
+                                "Name": "MSSqlServer",
+                                "Args": {
+                                    "connectionString": "Data Source=172.20.160.190; Initial Catalog=NajmLogTrace;Persist Security Info=True;User ID=TestAppUser;Password=Najmis@@123;MultipleActiveResultSets=True;TrustServerCertificate=True;",
+                                    "schemaName": "dbo",
+                                    "tableName": "NajmApplicationLogs_VehicleInsuranceInquiry_APIErrorLog",
+                                    "autoCreateSqlTable": false,
+                                    "batchPostingLimit": 100,
+                                    "period": "0.00:00:30",
+                                    "columnOptionsSection": {
+                                        "removeStandardColumns": [ "MessageTemplate", "Properties", "Level", "TimeStamp", "Id" ],
+                                        "level": {
+                                            "storeAsEnum": false
+                                        },
+                                        "additionalColumns": [
+                                            {
+                                                "ColumnName": "Id",
+                                                "DataType": "uniqueidentifier"
+                                            },
+                                            {
+                                                "ColumnName": "MachineName",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 50
+                                            },
+                                            {
+                                                "ColumnName": "IPAddress",
+                                                "DataType": "varchar",
+                                                "DataLength": 50
+                                            },
+                                            {
+                                                "ColumnName": "Request",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 2000
+                                            },
+                                            {
+                                                "ColumnName": "Response",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 2000
+                                            },
+                                            {
+                                                "ColumnName": "StatusCode",
+                                                "DataType": "int"
+                                            },
+                                            {
+                                                "ColumnName": "Action",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 500
+                                            },
+                                            {
+                                                "ColumnName": "RequestURL",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 1000
+                                            },
+                                            {
+                                                "ColumnName": "HttpVerb",
+                                                "DataType": "char",
+                                                "DataLength": 6
+                                            },
+                                            {
+                                                "ColumnName": "UserAgent",
+                                                "DataType": "varchar",
+                                                "DataLength": 256
+                                            },
+                                            {
+                                                "ColumnName": "LogLevel",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "LoggerType",
+                                                "DataType": "varchar",
+                                                "DataLength": 100
+                                            },
+                                            {
+                                                "ColumnName": "CreatedOn",
+                                                "DataType": "datetime2",
+                                                "DataLength": 7
+                                            },
+                                            {
+                                                "ColumnName": "CreatedDay",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "CreatedMonth",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "CreatedYear",
+                                                "DataType": "smallint"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "Name": "Logger",
+                "Args": {
+                    "configureLogger": {
+                        "Filter": [
+                            {
+                                "Name": "ByIncludingOnly",
+                                "Args": {
+                                    "expression": "(@l = 'Information')"
+                                }
+                            }
+                        ],
+                        "WriteTo": [
+                            {
+                                "Name": "File",
+                                "Args": {
+                                    "path": "Logs/cp_.log",
+                                    "outputTemplate": "{Timestamp:o} [{Level:u3}] ({SourceContext}) {Message}{NewLine}{Exception}",
+                                    "rollingInterval": "Day",
+                                    "retainedFileCountLimit": 7
+                                }
+                            },
+                            {
+                                "Name": "MSSqlServer",
+                                "Args": {
+                                    "connectionString": "Data Source=172.20.160.190; Initial Catalog=NajmLogTrace;Persist Security Info=True;User ID=TestAppUser;Password=Najmis@@123;MultipleActiveResultSets=True;TrustServerCertificate=True;",
+                                    "schemaName": "dbo",
+                                    "tableName": "NajmApplicationLogs_VehicleInsuranceInquiry_APIAuditLog",
+                                    "autoCreateSqlTable": false,
+                                    "batchPostingLimit": 100,
+                                    "period": "0.00:00:30",
+                                    "columnOptionsSection": {
+                                        "removeStandardColumns": [
+                                            "Exception",
+                                            "MessageTemplate",
+                                            "Properties",
+                                            "Level",
+                                            "TimeStamp",
+                                            "Id"
+                                        ],
+                                        "level": {
+                                            "storeAsEnum": false
+                                        },
+                                        "additionalColumns": [
+                                            {
+                                                "ColumnName": "Id",
+                                                "DataType": "uniqueidentifier"
+                                            },
+                                            {
+                                                "ColumnName": "MachineName",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 50
+                                            },
+                                            {
+                                                "ColumnName": "IPAddress",
+                                                "DataType": "varchar",
+                                                "DataLength": 50
+                                            },
+                                            {
+                                                "ColumnName": "Request",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 2000
+                                            },
+                                            {
+                                                "ColumnName": "Response",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 2000
+                                            },
+                                            {
+                                                "ColumnName": "StatusCode",
+                                                "DataType": "int"
+                                            },
+                                            {
+                                                "ColumnName": "Action",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 500
+                                            },
+                                            {
+                                                "ColumnName": "RequestURL",
+                                                "DataType": "nvarchar",
+                                                "DataLength": 1000
+                                            },
+                                            {
+                                                "ColumnName": "HttpVerb",
+                                                "DataType": "char",
+                                                "DataLength": 6
+                                            },
+                                            {
+                                                "ColumnName": "UserAgent",
+                                                "DataType": "varchar",
+                                                "DataLength": 256
+                                            },
+                                            {
+                                                "ColumnName": "LogLevel",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "LoggerType",
+                                                "DataType": "varchar",
+                                                "DataLength": 100
+                                            },
+                                            {
+                                                "ColumnName": "CreatedOn",
+                                                "DataType": "datetime2",
+                                                "DataLength": 7
+                                            },
+                                            {
+                                                "ColumnName": "CreatedDay",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "CreatedMonth",
+                                                "DataType": "tinyint"
+                                            },
+                                            {
+                                                "ColumnName": "CreatedYear",
+                                                "DataType": "smallint"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

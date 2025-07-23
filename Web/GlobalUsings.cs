@@ -1,0 +1,24 @@
+﻿global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Adf.Core;
+global using Application.VehicleInsuranceInquiry.Query;
+global using Application.VehicleInsuranceInquiry.Query.Dto;
+global using MediatR;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using Microsoft.Extensions.Primitives;
+global using Application.Interfaces;
+global using Application.Models;
+global using Serilog.Debugging;
+global using FluentValidation.Results;
+global using System.Net;
+global using Application;
+global using Infrastructure;
+global using Infrastructure.Repositories;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Serilog;
+global using Web;
+global using Web.Middlewares;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Text.Json;
+global using Application.Common.Exceptions;
+
